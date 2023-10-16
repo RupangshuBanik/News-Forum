@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>News App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">NewsApp</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="sports">Sports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="politics">Politics</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="tech">Technology</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" id="fin">Finance</a>
+                    </li>
+
+
+                </ul>
+                <form class="d-flex" role="search">
+                    <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button id="search" class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome to News Forum (<span id="resultCount"></span> Results)</h1>
+        <div class="row content">
+
+
+            <div class="card my-4 mx-2" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-around my-4">
+            <button class="btn btn-primary" id="prev">&lt; Previous Page</button>
+            <button class="btn btn-primary" id="next">Next Page &gt;></button>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+    <script>
+        let currentQuery = "sports"
+        let currentPage = 1;
+        const fetchNews = async (page, q) => {
+            console.log(`Fetching News for ${q}. Page number ${page}.......`);
+            var url = 'https://newsapi.org/v2/everything?' +
+                'q=' +q+
+                '&from=2023-10-14&' +
+                'pageSize=20&' +
+                'language=en&' +
+                'page=' + page +
+                '&sortBy=popularity&' +
+                'apiKey=5b57c502faa6402ab0ef32d0c16b9349';
+
+            var req = new Request(url);
+
+             let a = await fetch(req)
+             let response = await a.json()
+            
+            // let response = {"status":"ok","totalResults":630,"articles":[{"source":{"id":null,"name":"CNET"},"author":"Zachary McAuliffe","title":"iOS 17: Your Updated Photos App Can Recognize Your Pets Now - CNET","description":"Most pet owners say their pets are family, and Apple agrees.","url":"https://www.cnet.com/tech/mobile/ios-17-your-updated-photos-app-recognizes-your-pets-now/","urlToImage":"https://www.cnet.com/a/img/resize/f193bedea381e39e6ee13ccacf9567603c6edec4/hub/2023/09/18/0f288036-89d0-4bfc-8506-f9af1ce4ac18/screenshot-2023-09-18-at-1-06-01-pm.png?auto=webp&fit=crop&height=675&width=1200","publishedAt":"2023-10-14T12:00:07Z","content":"Apple released iOS 17 on Sept. 18, and the latest OS brings new features and improvements to your iPhone, including Live Stickers and offline maps. The OS also updates the Photos app, which now lets … [+1641 chars]"},{"source":{"id":"business-insider","name":"Business Insider"},"author":"Haley Tenore","title":"Dozens more stalking victims join lawsuit claiming Apple AirTags are a 'weapon for stalkers and abusers'","description":"More than 30 people joined a class action lawsuit against Apple, claiming that AirTags were used to track them without their consent.","url":"https://www.businessinsider.com/apple-airtag-dozens-more-stalking-victims-join-lawsuit-2023-10","urlToImage":"https://i.insider.com/6529619f68f1d46f52b11ff1?width=1200&format=jpeg","publishedAt":"2023-10-14T14:48:11Z","content":"More than 30 people joined a class action lawsuit claiming Apple AirTags helped facilitate stalking.Melina Mara/Getty Images\r\n<ul>\n<li>37 people joined a class action lawsuit against Apple over stalk… [+2942 chars]"},{"source":{"id":null,"name":"Android Central"},"author":"jerry.hildenbrand@futurenet.com (Jerry Hildenbrand)","title":"With the Pixel 8 series, there is now a clear divide between Google's Android and Google Pixel","description":"The Pixel 8 showcases everything Google has to offer in ways no other phone ever will — or can.","url":"https://www.androidcentral.com/phones/google-makes-pixel-8-stand-out-among-other-android-phones","urlToImage":"https://cdn.mos.cms.futurecdn.net/boVf4p3mcjQvLY347xzgna-1200-80.jpg","publishedAt":"2023-10-14T15:00:06Z","content":"Every company that makes a smartphone should show us something that's better than last year's design in some way. It doesn't have to be drastically different, though if it seems too familiar, nobody … [+5097 chars]"},{"source":{"id":null,"name":"VentureBeat"},"author":"Dean Takahashi","title":"A 14-year trademark battle over the name ‘Edge’ in gaming nears its close","description":"Fourteen years ago, Tim Langdell became a pariah of the game industry, as he was branded a \"trademark troll.\" He eventually won his case.","url":"https://venturebeat.com/games/a-14-year-trademark-battle-over-edge-and-edge-games-comes-to-a-close/","urlToImage":"https://venturebeat.com/wp-content/uploads/2023/09/edge-games-5.jpg?w=1200&strip=all","publishedAt":"2023-10-14T16:30:00Z","content":"GamesBeat Next unites gaming industry leaders for exceptional content, networking, and deal-making opportunities. Join us on Oct 23-24 in San Francisco.  Register Now\r\nFourteen years ago, Tim Langdel… [+1739 chars]"},{"source":{"id":null,"name":"AppleInsider"},"author":"news@appleinsider.com (Malcolm Owen)","title":"Apple defends IAP against Japanese government App Store report","description":"Apple has defended its In-App Payments policies to the government of Japan, insisting that it is more than a payment processing feature, and that its App Store commission rates are \"reasonable.\"An Apple Store in JapanThe Digital Market Competition Council of …","url":"https://appleinsider.com/articles/23/10/14/apple-defends-iap-against-japanese-government-app-store-report","urlToImage":"https://photos5.appleinsider.com/gallery/56802-115524-44918-87318-000-lead-Apple-Store-in-Japan-xl-xl.jpg","publishedAt":"2023-10-14T16:30:09Z","content":"An Apple Store in Japan\r\nApple has defended its In-App Payments policies to the government of Japan, insisting that it is more than a payment processing feature, and that its App Store commission rat… [+2889 chars]"},{"source":{"id":null,"name":"MacRumors"},"author":"Joe Rossignol","title":"iPhone 16 Pro Rumor Recap: Larger Displays, Capture Button, 5G Advanced, and More","description":"While the iPhone 16 Pro and iPhone 16 Pro Max are still around 11 months away from launching, there are already several rumors about the devices. Below, we have recapped new features and changes expected for the devices so far.\n\n\n\n\n\nThese are some of the key …","url":"https://www.macrumors.com/2023/10/14/iphone-16-pro-rumor-recap-october/","urlToImage":"https://images.macrumors.com/t/dQzfQzCqjlEJdrgq3QVPbLFzfeM=/3532x/article-new/2023/09/iPhone-16-Side-Feature.jpg","publishedAt":"2023-10-14T16:00:00Z","content":"While the iPhone 16 Pro and iPhone 16 Pro Max are still around 11 months away from launching, there are already several rumors about the devices. Below, we have recapped new features and changes expe… [+2437 chars]"},{"source":{"id":null,"name":"Slashdot.org"},"author":"EditorDavid","title":"Musicians Are Angry About Venues Taking T-shirt Money","description":"The singer known as Tomberlin says their first five years in the music industry may have been a net loss, according to MarketWatch. Selling \"merch[andise]\" like t-shirts \"is what really is covering your costs and hopefully helping you make, like, an actual pr…","url":"https://entertainment.slashdot.org/story/23/10/14/1649252/musicians-are-angry-about-venues-taking-t-shirt-money","urlToImage":"https://a.fsdn.com/sd/topics/music_64.png","publishedAt":"2023-10-14T19:34:00Z","content":"The singer known as Tomberlin says their first five years in the music industry may have been a net loss, according to MarketWatch. Selling \"merch[andise]\" like t-shirts \"is what really is covering y… [+1733 chars]"},{"source":{"id":null,"name":"The A.V. Club"},"author":"William Hughes","title":"Apple TV+ shuts down The Afterparty","description":"Queue up the Semisonic and start putting away the booze: The Afterparty is officially over. Deadline reports that the genre-flipping TV series has now been canceled at AppleTV+, where it ran for two seasons of murder-mystery-solving fun.Read more...","url":"https://www.avclub.com/apple-tv-shuts-down-the-afterparty-1850927051","urlToImage":"https://i.kinja-img.com/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/bbd76f075b561f6fcc02da96b235a886.jpg","publishedAt":"2023-10-14T00:28:00Z","content":"Queue up the Semisonic and start putting away the booze: The Afterpartyis officially over. Deadline reports that the genre-flipping TV series has now been canceled at AppleTV+, where it ran for two s… [+1605 chars]"},{"source":{"id":null,"name":"Gizmodo.jp"},"author":"お買いものサポーター","title":"Apple製品が軒並みセールに！iPad mini6やMacBook Proも売り切れる前に急げ〜【Amazonプライム感謝祭】","description":"Amazon（アマゾン）では、2023年10月14日0時から10月15日23時59分まで「Amazonプライム感謝祭」を開催中。\n\n現在、2021年モデルのMacBook Pro 14インチやApple Watch Series 8、AirPodsなど、Apple製品がお買い得に登場しています。","url":"https://www.gizmodo.jp/2023/10/amazon-timesale-fes-2023-1014-4.html","urlToImage":"https://media.loom-app.com/gizmodo/dist/images/2023/10/14/GIZ.jpg?w=1280&h=630&f=jpg","publishedAt":"2023-10-14T10:45:00Z","content":"Amazon20231014010152359Amazon\r\n2021MacBook Pro 14Apple Watch Series 8AirPodsApple\r\n2023101416\r\n10,00012\r\nKindle200Kindle Unlimited399\r\niPad miniiPad Air1\r\nApple Watch35%Cellular\r\n2AirPods20%Beats Fit… [+94 chars]"},{"source":{"id":null,"name":"Gizmodo.jp"},"author":"お買いものサポーター","title":"そろそろオーディオ、アプデしない？Apple、Bose、Anker、Sonyまでマストバイ15選はこちら【Amazonプライム感謝際】","description":"Amazon（アマゾン）では、2023年10月14日0時から10月15日23時59分まで「Amazonプライム感謝祭」を開催中。\n\n現在、Apple AirPods（第2世代）が20%オフやBoseのノイキャンイヤホンが24%オフなど、オーディオアイテムがお買い得に登場しています。","url":"https://www.gizmodo.jp/2023/10/amazon-timesale-fes-2023-1014-5.html","urlToImage":"https://media.loom-app.com/gizmodo/dist/images/2023/10/14/GZ-2.png?w=1280&h=630&f=jpg","publishedAt":"2023-10-14T12:45:00Z","content":"Amazon20231014010152359Amazon\r\nApple AirPods220%Bose24%\r\n2023101417\r\n10,00012\r\nKindle200Kindle Unlimited399\r\nApple AirPods220%Beats Fit Pro14%\r\nBOSEAnkerSONY\r\nBOSE\r\nAnker\r\nSony\r\n52%\r\nAmazon\r\nAmazon10… [+20 chars]"},{"source":{"id":null,"name":"AppleInsider"},"author":"news@appleinsider.com (Jess Pingrey)","title":"Daily deals Oct. 14: $499 M2 Mac mini, Amazon Fire TV $109, robot vacuum $110, more","description":"Today's top deals include 36% off an Anker 7-in-1 charging station, 3rd Gen AirPods for $150, a Belkin wireless iPhone charger with MagSafe for $20, 68% off an Echelon Connect bike, 45% off a 32\" Amazon Fire TV, and more.Save on AirPods, Mac mini & Apple Watc…","url":"https://appleinsider.com/articles/23/10/14/daily-deals-oct-14-499-m2-mac-mini-amazon-fire-tv-109-robot-vacuum-110-more","urlToImage":"https://photos5.appleinsider.com/gallery/56801-115500-daily-deals-oct-14-xl.jpg","publishedAt":"2023-10-14T12:57:10Z","content":"Save on AirPods, Mac mini &amp; Apple Watch\r\nToday's top deals include 36% off an Anker 7-in-1 charging station, 3rd Gen AirPods for $150, a Belkin wireless iPhone charger with MagSafe for $20, 68% o… [+3629 chars]"},{"source":{"id":null,"name":"GSMArena.com"},"author":"Ro","title":"Apple iPhone 15 Plus vs. Apple iPhone 15","description":"Wondering whether you should get this year's budget iPhone 15 vanilla or the Plus? We're here to help you out. They both have their quirks and strengths, but the good news, however, is that the iPhone 15 and 15 Plus offer a substantial upgrade over their pred…","url":"https://www.gsmarena.com/apple_iphone_15_plus_vs_apple_iphone_15_review_battery_camera_price_compared-news-60225.php","urlToImage":"https://fdn.gsmarena.com/imgroot/news/23/10/iphone-15-plus-vs-iphone-15/-952x498w6/gsmarena_000.jpg","publishedAt":"2023-10-14T14:22:01Z","content":"Wondering whether you should get this year's budget iPhone 15 vanilla or the Plus? We're here to help you out. They both have their quirks and strengths, but the good news, however, is that the iPhon… [+7790 chars]"},{"source":{"id":null,"name":"Gizmodo.jp"},"author":"ヨコヤマコム","title":"2023年公開の注目映画11本。予習にピッタリな関連作品もまとめました","description":"Image:ソニー・ピクチャーズエンタテインメント芸術の秋、よし、映画を観よう。というわけでようやく涼しくなったと思ったら、もう2023年も残りわずかになりましたね。今年も多くの映画が公開されました。めちゃくちゃ完成度が高かった『ザ・スーパーマリオブラザーズ・ムービー』やアカデミー賞で話題をかっさらった『エブリシング・エブリウェア・オール・アット・ワンス』などの話題作も。さて、今回は2023年9月","url":"https://www.gizmodo.jp/2023/10/2023-latest-and-upcoming-movies.html","urlToImage":"https://media.loom-app.com/gizmodo/dist/images/2023/10/13/NAP_16x9_Thumb_Official_Trailer_V3_0705_08_JP.jpg?w=1280&h=630&f=jpg","publishedAt":"2023-10-14T02:30:00Z","content":"2023\r\n20239\r\nNetflix2023927\r\nMr.FOX\r\n999\r\n2003\r\n\"\"\r\nCG\r\n4\r\nCGCG\r\n1990\r\n13\r\n1920\r\nApple TV+\r\n-1.0\r\n-1.01950\r\n-1.0\"\"\"\"\r\nU-NEXT19541991 VS \r\nNetflix\r\n\"\"\r\nNetflix\r\nU-NEXT, Hulu, Amazon\r\nNetflix, U-NEXT\r\n… [+259 chars]"},{"source":{"id":null,"name":"Atariarchives.org"},"author":null,"title":"Cottage Computer Programming (2003?)","description":"Comments","url":"https://www.atariarchives.org/deli/cottage_computer_programming.php","urlToImage":null,"publishedAt":"2023-10-14T13:16:17Z","content":"COTTAGECOMPUTERPROGRAMMINGby Paul Lutus\r\nPaul Lutus dropped out of the NASA\r\nrat race to live on a mountaintop for $40 a month.Then he wrote the most popular word\r\nprocessing program for personal com… [+11543 chars]"},{"source":{"id":null,"name":"Journal du geek"},"author":"Julie Hay","title":"For All Mankind : 2003, odysée de l’espace pour la série Apple TV+ (trailer)","description":"Direction les années 2000 pour For All Mankind. Pour l'automne, la série part à la chasse aux astéroïdes depuis Mars. \nFor All Mankind : 2003, odysée de l’espace pour la série Apple TV+ (trailer)","url":"https://www.journaldugeek.com/2023/10/14/for-all-mankind-2003-odysee-de-lespace-pour-la-serie-apple-tv-trailer/","urlToImage":"https://www.journaldugeek.com/content/uploads/2023/10/for-all-mankind-saison-4-apple-tv-plus.jpg","publishedAt":"2023-10-14T07:00:41Z","content":"Direction les années 2000 pour For All Mankind. Pour l'automne, la série part à la chasse aux astéroïdes depuis Mars.“Tout le monde veut un morceau de ce gâteau”. Après la Lune et Mars, les astronaut… [+2598 chars]"},{"source":{"id":null,"name":"Applesfera.com"},"author":"Jesús Quesada","title":"Teléfono Apple iPhone 15 VS Google Pixel 8: características, diferencias y precios","description":"Apple suele desplegar la artillería pesada en la recta final del año. Es justo después del verano cuando tiende a presentar sus novedades en telefonía móvil, siendo el iPhone 15 el protagonista del 2023. Este terminal, si bien sigue una línea continuista resp…","url":"https://www.applesfera.com/seleccion/telefono-apple-iphone-15-vs-google-pixel-8-caracteristicas-diferencias-precios","urlToImage":"https://i.blogs.es/d1eec7/iphone-15-vs-google-pixel-8/840_560.jpeg","publishedAt":"2023-10-14T17:01:44Z","content":"Apple suele desplegar la artillería pesada en la recta final del año. Es justo después del verano cuando tiende a presentar sus novedades en telefonía móvil, siendo el iPhone 15 el protagonista del 2… [+8096 chars]"},{"source":{"id":null,"name":"Gizmodo.jp"},"author":"岩田リョウコ","title":"Googleはアレのために毎年Appleに180億ドルも払ってる","description":"Googleは、iPhoneのデフォルト検索エンジンのために、年間180億ドル以上の金額を支払っています。これはAppleの年間営業利益の約15％に当たります。","url":"https://www.gizmodo.jp/2023/10/google-pays-apple-18-billion-for-search-engine-default.html","urlToImage":"https://media.loom-app.com/gizmodo/dist/images/2023/10/12/b24eb40e2e71a0937499dbe4dd675270.jpg?w=1280&h=630&f=jpg","publishedAt":"2023-10-14T12:00:00Z","content":"2\r\niPhone1802002600029000GoogleAppleApple15\r\nAppleGoogle\r\nAppleGoogle1Apple\r\nGoogleApple\r\nGoogleCEO2007Google\r\nKenneth DintzershGoogleISA100\r\n180200GoogleAndroid\r\nGoogle\r\nGoogleDintzersh\r\nAppleGoogle… [+28 chars]"},{"source":{"id":null,"name":"Xataka.com"},"author":"Javier Lacort","title":"La IA tiene dos caminos para el smartphone: camina o revienta","description":"En estos últimos días hemos conocido unas reuniones que tienen tintes de misticismo tal vez, y de futurismo tecnológico con total seguridad: las de Sam Altman y Jony Ive. El CEO de OpenAI, la empresa que ha cambiado la percepción mundial respecto a la IA; y e…","url":"https://www.xataka.com/moviles/ia-tiene-dos-caminos-para-smartphone-camina-revienta","urlToImage":"https://i.blogs.es/a96613/1366_2000/840_560.jpeg","publishedAt":"2023-10-14T10:01:39Z","content":"En estos últimos días hemos conocido unas reuniones que tienen tintes de misticismo tal vez, y de futurismo tecnológico con total seguridad: las de Sam Altman y Jony Ive. El CEO de OpenAI, la empresa… [+4327 chars]"},{"source":{"id":null,"name":"Gizmodo.jp"},"author":"お買いものサポーター","title":"本日開始の【Amazonプライム感謝祭】でのマストバイ15選。AppleやAnker、ルンバまでこのチャンスを逃さないで！","description":"Amazon（アマゾン）では、2023年10月14日0時から10月15日23時59分まで「Amazonプライム感謝祭」を開催中。\n\n 現在、AppleのAirPodsが20%オフやFire TV Stickが50％オフなど、今すぐ使えるアイテムがお買い得に登場しています。","url":"https://www.gizmodo.jp/2023/10/amazon-timesale-fes-2023-1014-1.html","urlToImage":"https://media.loom-app.com/gizmodo/dist/images/2023/10/14/GZ.png?w=1280&h=630&f=jpg","publishedAt":"2023-10-14T04:45:00Z","content":"Amazon20231014010152359Amazon\r\nAppleAirPods20%Fire TV Stick50\r\n2023101412 \r\n10,00012\r\nKindle200Kindle Unlimited399\r\nApple2AirPods\r\nApple\r\nAnker20%\r\nAnker\r\nAmazon Fire TV StickEcho Show 5\r\nAmazon\r\nHDD… [+43 chars]"},{"source":{"id":null,"name":"Gizmodo.com"},"author":"Linda Codega","title":"Victor LaValle on Bringing Women's Perspectives Into The Changeling","description":"Image: Apple TV+\r\nAuthor Victor LaValle and showrunner Kelly Marcel spoke to io9 at a press line after the panel for Apple TV+’s adaptation of The Changeling, talking about how to work within the confines of the novel, and when to push the boundaries of what’…","url":"https://gizmodo.com/the-changeling-victor-lavalle-kelly-marcel-nycc-1850927492","urlToImage":"https://i.kinja-img.com/image/upload/c_fill,f_auto,fl_progressive,g_center,h_675,pg_1,q_80,w_1200/b105a797493635af77f16e0f1e1dcde7.png","publishedAt":"2023-10-14T16:10:00Z","content":"Author Victor LaValle and showrunner Kelly Marcel spoke to io9 at a press line after the panel for Apple TV+s adaptation of The Changeling, talking about how to work within the confines of the novel"}]}
+        
+            
+
+            let str = ""
+            resultCount.innerHTML = response.totalResults
+            for (let item of response.articles) {
+                str = str + `<div class="card my-4 mx-2" style="width: 18rem;">
+                    <img height="184" img src="${item.urlToImage}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${item.title}</h5>
+                        <p class="card-text">${item.description.slice(0,50)}...</p>
+                    <a href="${item.url}" target="_blank" class="btn btn-primary">Read Article</a>
+                    </div>
+                </div>`
+            }
+            document.querySelector(".content").innerHTML = str
+
+
+        }
+        fetchNews(1, currentQuery)
+        search.addEventListener("click", (e)=>{
+            e.preventDefault()
+            let query = searchInput.value;
+            currentQuery = query
+            fetchNews(1, query)
+        })
+        sports.addEventListener("click", (e)=>{
+            e.preventDefault()
+            currentQuery = "sports"
+            fetchNews(1, currentQuery)
+        })
+        politics.addEventListener("click", (e)=>{
+            e.preventDefault()
+            currentQuery = "politics"
+            fetchNews(1, currentQuery)
+        })
+        tech.addEventListener("click", (e)=>{
+            e.preventDefault()
+            currentQuery = "technology"
+            fetchNews(1, currentQuery)
+        })
+        fin.addEventListener("click", (e)=>{
+            e.preventDefault()
+            currentQuery = "finance"
+            fetchNews(1, currentQuery)
+        })
+        prev.addEventListener("click", (e)=>{
+            e.preventDefault()
+            if (currentPage > 1)
+            {
+                currentPage = currentPage - 1
+                fetchNews(currentPage, currentQuery)
+            }    
+        })
+        next.addEventListener("click", (e)=>{
+            e.preventDefault()
+            currentPage = currentPage + 1
+            fetchNews(currentPage, currentQuery)
+        })
+        
+    </script>
+</body>
+
+</html>
